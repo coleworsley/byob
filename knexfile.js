@@ -1,7 +1,7 @@
 module.exports = {
   development: {
     client: 'pg',
-    connection: 'postgres://localhost/jetfuel',
+    connection: 'postgres://localhost/byob',
     useNullAsDefault: true,
     migrations: {
       directory: './db/migrations'
@@ -13,7 +13,7 @@ module.exports = {
 
   test: {
     client: 'pg',
-    connection: process.env.DATABASE_URL || 'postgres://localhost/jetfueltest',
+    connection: process.env.DATABASE_URL || 'postgres://localhost/byobtest',
     useNullAsDefault: true,
     migrations: {
       directory: './db/migrations'
