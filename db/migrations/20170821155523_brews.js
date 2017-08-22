@@ -23,10 +23,11 @@ exports.up = function(knex, Promise) {
       table.increments('id').primary();
       table.string('name');
       table.string('style');
-      table.integer('abv');
-      table.integer('ounces');
-      table.integer('breweries_id').unsigned();
-      table.foreign('breweries_id').references('breweries.id');
+      table.decimal('abv');
+      table.decimal('ibu').defaultTo(0);
+      table.decimal('ounces');
+      table.integer('brewery_id').unsigned();
+      table.foreign('brewery_id').references('breweries.id');
       table.timestamps(true, true);
     }),
   ])
