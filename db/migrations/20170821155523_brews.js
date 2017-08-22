@@ -23,9 +23,9 @@ exports.up = function(knex, Promise) {
       table.increments('id').primary();
       table.string('name');
       table.string('style');
-      table.decimal('abv');
-      table.decimal('ibu').defaultTo(0);
-      table.decimal('ounces');
+      table.string('abv');
+      table.string('ibu');
+      table.string('ounces');
       table.integer('brewery_id').unsigned();
       table.foreign('brewery_id').references('breweries.id');
       table.timestamps(true, true);
