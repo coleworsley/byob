@@ -16,7 +16,7 @@ app.use(express.static('public'));
 app.get('/api/v1/brews', (req, res) => {
   db('brews')
     .select()
-    .then(brews => res.status(200).json({ brews }))
+    .then(brews => res.status(200).json(brews))
     .catch(error => res.status(404).json({ error }));
 });
 

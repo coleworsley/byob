@@ -1,4 +1,4 @@
-const brews = require('../../Data/beers.json');
+const brews = require('./mockBrews.json');
 const breweries = require('../../Data/breweries.json');
 
 exports.seed = (knex, Promise) => knex('brews').del()
