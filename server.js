@@ -15,3 +15,6 @@ app.use(express.static('public'));
 app.listen(port, () => {
   console.log(`App is listening on http://localhost:${port}`);
 });
+
+
+module.exports = {app, db}
