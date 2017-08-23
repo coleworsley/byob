@@ -1,7 +1,7 @@
 [
   {
-  "id": "1436",
-  "abv": "0.05",
+  "id": 1,
+  "abv": "0.066",
   "ibu": "0.11",
   "name": "Pub Beer",
   "style": "American Pale Lager",
@@ -9,7 +9,7 @@
   "ounces": "12"
   },
   {
-    "id": "2265",
+    "id": 2,
     "abv": "0.066",
     "ibu": "0.11",
     "name": "Devil's Cup",
