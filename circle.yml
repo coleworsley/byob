@@ -9,7 +9,7 @@ deployment:
   production:
     branch: master
     heroku:
-      appname: cw-jetfuel
+      appname: craft-brewz
 test:
   override:
     - npm run lint
