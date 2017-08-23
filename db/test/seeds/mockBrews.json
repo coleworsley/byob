@@ -1,0 +1,20 @@
+[
+  {
+  "id": "1436",
+  "abv": "0.05",
+  "ibu": null,
+  "name": "Pub Beer",
+  "style": "American Pale Lager",
+  "brewery_id": "408",
+  "ounces": "12"
+  },
+  {
+    "id": "2265",
+    "abv": "0.066",
+    "ibu": null,
+    "name": "Devil's Cup",
+    "style": "American Pale Ale (APA)",
+    "brewery_id": "177",
+    "ounces": "12"
+  }
+]
