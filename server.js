@@ -1,5 +1,7 @@
+/* eslint-env-mocha */
 const express = require('express');
 const bodyParser = require('body-parser');
+// eslint-disable-next-line
 const path = require('path');
 
 const app = express();
@@ -14,8 +16,8 @@ app.use(bodyParser.json());
 app.use(express.static('public'));
 
 app.listen(port, () => {
+  // eslint-disable-next-line
   console.log(`App is listening on http://localhost:${port}`);
 });
 
-
-module.exports = {app, db}
+module.exports = { app, db };

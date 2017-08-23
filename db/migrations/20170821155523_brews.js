@@ -1,42 +1,38 @@
 
-exports.up = (knex, Promise) => {
-  return Promise.all([
-    knex.schema.createTable('users', (table) => {
-      table.increments('id').primary();
-      table.string('first_name');
-      table.string('last_name');
-      table.string('password');
-      table.string('email');
-      table.string('username');
-      table.timestamps(true, true);
-    }),
+exports.up = (knex, Promise) => Promise.all([
+  knex.schema.createTable('users', (table) => {
+    table.increments('id').primary();
+    table.string('first_name');
+    table.string('last_name');
+    table.string('password');
+    table.string('email');
+    table.string('username');
+    table.timestamps(true, true);
+  }),
 
-    knex.schema.createTable('breweries', (table) => {
-      table.increments('id').primary();
-      table.string('name');
-      table.string('city');
-      table.string('state');
-      table.timestamps(true, true);
-    }),
+  knex.schema.createTable('breweries', (table) => {
+    table.increments('id').primary();
+    table.string('name');
+    table.string('city');
+    table.string('state');
+    table.timestamps(true, true);
+  }),
 
-    knex.schema.createTable('brews', (table) => {
-      table.increments('id').primary();
-      table.string('name');
-      table.string('style');
-      table.string('abv');
-      table.string('ibu');
-      table.string('ounces');
-      table.integer('brewery_id').unsigned();
-      table.foreign('brewery_id').references('breweries.id');
-      table.timestamps(true, true);
-    }),
-  ]);
-};
+  knex.schema.createTable('brews', (table) => {
+    table.increments('id').primary();
+    table.string('name');
+    table.string('style');
+    table.string('abv');
+    table.string('ibu');
+    table.string('ounces');
+    table.integer('brewery_id').unsigned();
+    table.foreign('brewery_id').references('breweries.id');
+    table.timestamps(true, true);
+  }),
+]);
 
-exports.down = (knex, Promise) => {
-  return Promise.all([
-    knex.schema.dropTable('brews'),
-    knex.schema.dropTable('breweries'),
-    knex.schema.dropTable('users'),
-  ]);
-};
+exports.down = (knex, Promise) => Promise.all([
+  knex.schema.dropTable('brews'),
+  knex.schema.dropTable('breweries'),
+  knex.schema.dropTable('users'),
+]);

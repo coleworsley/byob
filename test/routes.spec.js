@@ -1,7 +1,7 @@
 /* eslint-env mocha */
 const chai = require('chai');
 const chaiHttp = require('chai-http');
-const { app: server, db } = require('../server');
+const { app: server } = require('../server');
 
 // eslint-disable-next-line
 const should = chai.should();
