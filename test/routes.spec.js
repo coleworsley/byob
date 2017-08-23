@@ -1,4 +1,5 @@
 /* eslint-env mocha */
+/* eslint no-unused-expressions: "off" */
 const chai = require('chai');
 const chaiHttp = require('chai-http');
 const { app: server, db } = require('../server');
@@ -14,7 +15,6 @@ describe('Client Routes', () => {
       .get('/')
       .end((err, res) => {
         res.should.have.status(200);
-        // eslint-disable-next-line
         res.should.be.html;
         done();
       });
@@ -32,6 +32,7 @@ describe('API Routes', () => {
       .get('/api/v1/brews')
       .end((err, res) => {
         res.should.have.status(200);
+        res.should.be.json;
         done();
       });
   });
