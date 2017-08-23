@@ -36,24 +36,22 @@ describe('API Routes', () => {
     chai.request(server)
       .get('/api/v1/brews')
       .end((err, res) => {
-        // console.log(typeof res.body[0].abv);
-        console.log(res.body);
         res.should.have.status(200);
         res.should.be.json;
         res.body.should.be.a('array');
         res.body[0].should.have.property('id');
-        res.body[0].id.should.be.a('number');
-        res.body[0].abv.should.be.a('string');
-        res.body[0].ounces.should.be.a('number');
-        res.body[0].style.should.be.a('string');
-        res.body[0].name.should.be.a('string');
-        res.body[0].brewery_id.should.be.a('number');
         res.body[0].should.have.property('abv');
+        res.body[0].abv.should.equal('0.05');
         res.body[0].should.have.property('ibu');
+        res.body[0].ibu.should.equal('0.11');
         res.body[0].should.have.property('name');
+        res.body[0].name.should.equal('Pub Beer');
         res.body[0].should.have.property('style');
+        res.body[0].style.should.equal('American Pale Lager');
         res.body[0].should.have.property('ounces');
+        res.body[0].ounces.should.equal('12');
         res.body[0].should.have.property('brewery_id');
+        res.body[0].brewery_id.should.equal(408);
         done();
       });
   });
