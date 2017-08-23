@@ -22,9 +22,9 @@ exports.up = (knex, Promise) => Promise.all([
     table.increments('id').primary();
     table.string('name');
     table.string('style');
-    table.decimal('abv');
-    table.decimal('ibu');
-    table.integer('ounces');
+    table.float('abv');
+    table.float('ibu');
+    table.float('ounces');
     table.integer('brewery_id').unsigned();
     table.foreign('brewery_id').references('breweries.id');
     table.timestamps(true, true);
