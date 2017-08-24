@@ -1,6 +1,7 @@
 /* eslint-env-mocha */
 const express = require('express');
 const bodyParser = require('body-parser');
+const jwt = require('jsonwebtoken');
 // eslint-disable-next-line
 const path = require('path');
 
@@ -10,8 +11,42 @@ const env = process.env.NODE_ENV || 'development';
 const config = require('./knexfile')[env];
 const db = require('knex')(config);
 
+const checkAuth = ((req, res, next) => {
+  if (req.method === 'GET') {
+    return next();
+  }
+
+  const token = req.headers.authorization;
+
+  if (!token) {
+    return res.status(403).json({
+      error: 'You must be authorized to use this endpoint',
+    });
+  }
+
+  const decoded = jwt.verify(token, process.env.SECRETKEY);
+
+  if (!decoded) {
+    return res.status(403).json({
+      error: 'Invalid token',
+    });
+  }
+
+  return next();
+});
+
+
 app.use(bodyParser.json());
 app.use(express.static('public'));
+app.use(checkAuth);
+
+app.post('/auth', (req, res) => {
+  const payload = req.body;
+
+  const token = jwt.sign(payload, process.env.SECRETKEY, { expiresIn: '48h' });
+
+  res.status(201).json({ token });
+});
 
 app.get('/api/v1/brews', (req, res) => {
   db('brews')
