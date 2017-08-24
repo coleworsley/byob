@@ -23,7 +23,7 @@ app.get('/api/v1/brews', (req, res) => {
 app.get('/api/v1/breweries', (req, res) => {
   db('breweries')
     .select()
-    .then(breweries => res.status(200).json({ breweries }))
+    .then(breweries => res.status(200).json(breweries))
     .catch(error => res.status(404).json({ error }));
 });
 

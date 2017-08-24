@@ -1,5 +1,5 @@
 const brews = require('./mockBrews.json');
-const breweries = require('../../Data/breweries.json');
+const breweries = require('./mockBreweries.json');
 
 exports.seed = (knex, Promise) => knex('brews').del()
   .then(() => knex('breweries').del())

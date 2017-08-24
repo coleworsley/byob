@@ -58,4 +58,22 @@ describe('API Routes', () => {
         done();
       });
   });
+  it('should return all the brews', (done) => {
+    chai.request(server)
+      .get('/api/v1/breweries')
+      .end((err, res) => {
+        res.should.have.status(200);
+        res.should.be.json;
+        res.body.should.be.a('array');
+        res.body[0].should.have.property('id');
+        res.body[0].id.should.equal(408);
+        res.body[0].should.have.property('name');
+        res.body[0].name.should.equal('NorthGate Brewing');
+        res.body[0].should.have.property('city');
+        res.body[0].city.should.equal('Minneapolis');
+        res.body[0].should.have.property('state');
+        res.body[0].state.should.equal('MN');
+        done();
+      });
+  });
 });
