@@ -10,5 +10,6 @@ exports.up = (knex, Promise) => Promise.all([
 ]);
 
 exports.down = (knex, Promise) => Promise.all([
-  knex.schema.dropTable('ratings'),
+  knex.schema.dropTable('user_brews'),
+  knex.schema.dropTable('user_breweries'),
 ]);
