@@ -1,6 +1,7 @@
 /* eslint-env-mocha */
 const express = require('express');
 const bodyParser = require('body-parser');
+const jwt = require('jsonwebtoken');
 // eslint-disable-next-line
 const path = require('path');
 
@@ -10,8 +11,18 @@ const env = process.env.NODE_ENV || 'development';
 const config = require('./knexfile')[env];
 const db = require('knex')(config);
 
+const secretKey = process.env.SECRETKEY;
+
 app.use(bodyParser.json());
 app.use(express.static('public'));
+
+app.post('/auth', (req, res) => {
+  const payload = req.body;
+
+  const token = jwt.sign(payload, process.env.SECRETKEY, { expiresIn: '48h' });
+
+  res.status(201).json({ token });
+});
 
 app.get('/api/v1/brews', (req, res) => {
   db('brews')
