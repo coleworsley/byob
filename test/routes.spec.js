@@ -1,6 +1,6 @@
 /* eslint-env mocha */
 /* eslint no-unused-expressions: "off" */
-const config = require('../knexfile')['test'];
+const config = require('../knexfile').test;
 const knex = require('knex')(config);
 const chai = require('chai');
 const chaiHttp = require('chai-http');
