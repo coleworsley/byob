@@ -1,30 +1,14 @@
 
 exports.up = (knex, Promise) => Promise.all([
-  knex.schema.createTable('user_brews', (table) => {
+  knex.schema.createTable('ratings', (table) => {
     table.increments('id').primary();
-    table.integer('user_id').unsigned();
-    table.foreign('user_id').references('users.id');
     table.integer('brews_id').unsigned();
     table.foreign('brews_id').references('brews.id');
-    table.string('review');
-    table.integer('rating');
-    table.integer('count');
-    table.timestamps(true, true);
-  }),
-
-  knex.schema.createTable('user_breweries', (table) => {
-    table.increments('id').primary();
-    table.integer('user_id').unsigned();
-    table.foreign('user_id').references('users.id');
-    table.integer('brewery_id').unsigned();
-    table.foreign('brewery_id').references('breweries.id');
-    table.string('review');
     table.integer('rating');
     table.timestamps(true, true);
   }),
 ]);
 
 exports.down = (knex, Promise) => Promise.all([
-  knex.schema.dropTable('user_breweries'),
-  knex.schema.dropTable('user_brews'),
+  knex.schema.dropTable('ratings'),
 ]);

@@ -26,6 +26,7 @@ describe('Client Routes', () => {
 describe('API Routes', () => {
   before((done) => {
     knex.migrate.rollback()
+      .then(() => knex.migrate.rollback())
       .then(() => knex.migrate.latest())
       .then(() => done());
   });
