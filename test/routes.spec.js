@@ -12,7 +12,7 @@ const should = chai.should();
 chai.use(chaiHttp);
 
 describe('Client Routes', () => {
-  it.skip('should return the homepage', (done) => {
+  it('should return the homepage', (done) => {
     chai.request(server)
       .get('/')
       .end((err, res) => {
@@ -24,19 +24,18 @@ describe('Client Routes', () => {
 });
 
 describe('API Routes', () => {
-  // before((done) => {
-  //   knex.migrate.rollback()
-  //     .then(() => knex.migrate.rollback())
-  //     .then(() => knex.migrate.latest())
-  //     .then(() => done());
-  // });
-  //
-  // beforeEach((done) => {
-  //   knex.seed.run()
-  //     .then(() => done());
-  // });
+  before((done) => {
+    knex.migrate.rollback()
+      .then(() => knex.migrate.latest())
+      .then(() => done());
+  });
 
-  it.skip('should return all the brews', (done) => {
+  beforeEach((done) => {
+    knex.seed.run()
+      .then(() => done());
+  });
+
+  it('should return all the brews', (done) => {
     chai.request(server)
       .get('/api/v1/brews')
       .end((err, res) => {
@@ -59,7 +58,7 @@ describe('API Routes', () => {
         done();
       });
   });
-  it.skip('should return all the brews', (done) => {
+  it('should return all the brews', (done) => {
     chai.request(server)
       .get('/api/v1/breweries')
       .end((err, res) => {
@@ -70,8 +69,8 @@ describe('API Routes', () => {
         res.body[0].id.should.equal(408);
         res.body[0].should.have.property('name');
         res.body[0].name.should.equal('NorthGate Brewing');
-        res.body[0].should.have.property('cit.skipy');
-        res.body[0].cit.skipy.should.equal('Minneapolis');
+        res.body[0].should.have.property('city');
+        res.body[0].city.should.equal('Minneapolis');
         res.body[0].should.have.property('state');
         res.body[0].state.should.equal('MN');
         done();
