@@ -1,4 +1,3 @@
-/* eslint-env-mocha */
 const express = require('express');
 const bodyParser = require('body-parser');
 const jwt = require('jsonwebtoken');
@@ -12,10 +11,6 @@ const config = require('./knexfile')[env];
 const db = require('knex')(config);
 
 const checkAuth = ((req, res, next) => {
-  if (req.method === 'GET') {
-    return next();
-  }
-
   const token = req.headers.authorization;
 
   if (!token) {
@@ -35,10 +30,8 @@ const checkAuth = ((req, res, next) => {
   return next();
 });
 
-
 app.use(bodyParser.json());
 app.use(express.static('public'));
-app.use(checkAuth);
 
 app.post('/auth', (req, res) => {
   const payload = req.body;
@@ -62,7 +55,7 @@ app.get('/api/v1/breweries', (req, res) => {
     .catch(error => res.status(404).json({ error }));
 });
 
-app.post('/api/v1/brews', (req, res) => {
+app.post('/api/v1/brews', checkAuth, (req, res) => {
   const newBrew = req.body;
 
   db('brews').insert(newBrew, 'id')

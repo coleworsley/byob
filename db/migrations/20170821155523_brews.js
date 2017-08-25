@@ -2,6 +2,7 @@
 exports.up = (knex, Promise) => Promise.all([
   knex.schema.createTable('breweries', (table) => {
     table.increments('id').primary();
+    table.integer('original_id');
     table.string('name');
     table.string('city');
     table.string('state');
@@ -10,6 +11,7 @@ exports.up = (knex, Promise) => Promise.all([
 
   knex.schema.createTable('brews', (table) => {
     table.increments('id').primary();
+    table.integer('original_id');
     table.string('name');
     table.string('style');
     table.float('abv');
