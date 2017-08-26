@@ -24,7 +24,7 @@ const specificBrew = (req, res) => {
 const postBrews = (req, res) => {
   const newBrew = req.body;
 
-  for (let requiredParam of ['brewery_id', 'name', 'style']) {
+  for (const requiredParam of ['brewery_id', 'name', 'style']) {
     if (!newBrew[requiredParam]) {
       return res.status(422).json({
         error: `Missing required parameter ${requiredParam}`,

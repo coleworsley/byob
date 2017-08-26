@@ -12,7 +12,7 @@ const getBreweries = (req, res) => {
 const postBreweries = (req, res) => {
   const newBrewery = req.body;
 
-  for (let requiredParam of ['name']) {
+  for (const requiredParam of ['name']) {
     if (!newBrewery[requiredParam]) {
       return res.status(422).json({
         error: `Missing required parameter ${requiredParam}`,

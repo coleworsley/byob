@@ -19,6 +19,10 @@ const checkAuth = ((req, res, next) => {
     });
   }
 
+  if (decoded.admin) {
+    return next();
+  }
+
   return next();
 });
 
