@@ -92,7 +92,7 @@ describe('API Routes', () => {
         });
     });
 
-    it('POST::SADPATH should return an error theres missing parameters', (done) => {
+    it('POST::SADPATH should return an error if theres missing parameters', (done) => {
       chai.request(server)
         .post('/api/v1/brews')
         .send({
@@ -107,6 +107,23 @@ describe('API Routes', () => {
           res.body.error.should.equal('Missing required parameter brewery_id');
           done();
         });
+    });
+
+    it('POST::SADPATH should return a 404 error if endpoint is incorrect', (done) => {
+      chai.request(server)
+        .post('/api/v1/brew')
+        .send({
+          name: 'New Brew',
+          style: 'American Pale Lager',
+          brewery_id: 408,
+          abv: 0.066,
+          ibu: 0.11,
+          ounces: 12,
+        })
+        .end((err, res) => {
+          res.should.have.status(404);
+          done();
+        })
     });
   });
 
