@@ -100,12 +100,25 @@ app.delete('/api/v1/breweries/:id', (req, res) => {
 app.delete('/api/v1/brews/:id', (req, res) => {
   const id = req.params.id;
   db('brews').where('id', id).del().returning('*')
-    .then((obj) => {
-      return obj.length
-        ? res.status(200).json(obj[0])
+    .then((brew) => {
+      return brew.length
+        ? res.status(200).json(brew[0])
         : res.status(404).json({ error: 'Resource does not exist' });
     })
     .catch(error => res.status(501).json({ error }));
+});
+
+app.get('/api/v1/brews/:id', (req, res) => {
+  const id = req.params.id;
+  db('brews')
+    .where('id', id)
+    .select()
+    .then((brew) => {
+      return brew.length
+        ? res.status(200).json(brew[0])
+        : res.status(404).json({ error: 'Resource does not exist' });
+    })
+    .catch(error => res.status(404).json({ error }));
 });
 
 app.listen(port, () => {
