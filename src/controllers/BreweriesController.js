@@ -47,7 +47,15 @@ const deleteBrewery = (req, res) => {
 };
 
 const updateBrewery = (req, res) => {
-  // endpoint = api/v1/breweries/:id;
+  const optionalParams = ['name', 'city', 'state'];
+  const errors = Object.keys(req.body).filter(e => !optionalParams.includes(e));
+
+  if (errors.length) {
+    return res.status(400).json({
+      error: `Invalid parameter(s): ${errors}`,
+    });
+  }
+
   const { id } = req.params;
 
   db('breweries')
