@@ -218,7 +218,6 @@ describe('API Routes', () => {
           res.body.should.have.property('brewery_id');
           res.body.brewery_id.should.equal(408);
           done();
-
         });
     });
   });
