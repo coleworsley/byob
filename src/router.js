@@ -1,38 +1,19 @@
 const express = require('express');
-const controller = require('./controller');
-const jwt = require('jsonwebtoken');
+const BreweriesController = require('./controllers/BreweriesController');
+const AuthController = require('./controllers/AuthController');
+const BrewsController = require('./controllers/BrewsController');
 
+const checkAuth = AuthController.checkAuth;
 const router = express.Router();
 
-const checkAuth = ((req, res, next) => {
-  const token = req.headers.authorization;
+router.post('/auth', AuthController.generateToken);
+router.get('/api/v1/brews', BrewsController.getBrews);
+router.post('/api/v1/brews', checkAuth, BrewsController.postBrews);
+router.delete('/api/v1/brews/:id', checkAuth, BrewsController.deleteBrew);
 
-  if (!token) {
-    return res.status(403).json({
-      error: 'You must be authorized to use this endpoint',
-    });
-  }
-  const decoded = jwt.verify(token, process.env.SECRETKEY);
-
-  if (!decoded) {
-    return res.status(403).json({
-      error: 'Invalid token',
-    });
-  }
-
-  return next();
-});
-
-router.post('/auth', controller.generateToken);
-router.get('/api/v1/brews', controller.getBrews);
-router.get('/api/v1/breweries', controller.getBreweries);
-router.post('/api/v1/brews', checkAuth, controller.postBrews);
-router.post('/api/v1/breweries', checkAuth, controller.postBreweries);
-router.delete('/api/v1/breweries/:id', checkAuth, controller.deleteBrewery);
-router.delete('/api/v1/brews/:id', checkAuth, controller.deleteBrew);
-router.get('/api/v1/brews/:id', controller.specificBrew);
-// router.get('/api/v1/brewery/:id/brews', controller.breweryBrews);
-router.post('/api/v1/brewery/:id/brews', controller.postBreweryBrews);
-
+router.get('/api/v1/breweries', BreweriesController.getBreweries);
+router.post('/api/v1/breweries', checkAuth, BreweriesController.postBreweries);
+router.delete('/api/v1/breweries/:id', checkAuth, BreweriesController.deleteBrewery);
+// router.post('/api/v1/brewery/:id/brews', checkAuth, BreweriesController.postBreweryBrews);
 
 module.exports = router;
