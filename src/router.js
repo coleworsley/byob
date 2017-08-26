@@ -30,5 +30,7 @@ router.post('/api/v1/brews', checkAuth, controller.postBrews);
 router.post('/api/v1/breweries', controller.postBreweries);
 router.delete('/api/v1/breweries/:id', controller.deleteBrewery);
 router.delete('/api/v1/brews/:id', controller.deleteBrew);
+router.get('/api/v1/brews/:id', controller.specificBrew);
+
 
 module.exports = router;

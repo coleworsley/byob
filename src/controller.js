@@ -18,6 +18,18 @@ const getBrews = (req, res) => {
     .catch(error => res.status(404).json({ error }));
 };
 
+const specificBrew = (req, res) => {
+  const id = req.params.id;
+  db('brews')
+    .where('id', id)
+    .select()
+    .then((brew) => {
+      return brew.length
+        ? res.status(200).json(brew[0])
+        : res.status(404).json({ error: 'Resource does not exist' });
+    });
+};
+
 const getBreweries = (req, res) => {
   db('breweries')
     .select()
@@ -84,4 +96,5 @@ module.exports = {
   postBreweries,
   deleteBrewery,
   deleteBrew,
+  specificBrew,
 };
