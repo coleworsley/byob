@@ -63,13 +63,13 @@ app.post('/api/v1/brews', (req, res) => {
       return res.status(422).json({
         error: `Missing required parameter ${requiredParam}`,
       });
-    };
-  };
+    }
+  }
 
   db('brews')
-    .insert(req.body, 'id')
-    .then((id) => {
-      return res.status(200).json(id[0]);
+    .insert(req.body, '*')
+    .then((brew) => {
+      return res.status(200).json(brew[0]);
     })
     .catch((error) => {
       return res.status(500).json({ error });
