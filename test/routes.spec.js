@@ -6,6 +6,13 @@ const chai = require('chai');
 const chaiHttp = require('chai-http');
 const { app: server } = require('../src/server');
 const jwt = require('jsonwebtoken');
+const payload = {
+  email: 'bob@gmail.com',
+  first_name: 'Robbie',
+  last_name: 'Lob'
+}
+const validToken = jwt.sign(payload, 'test', { expiresIn: '2m' })
+const invalidToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoidGhpcyBpcyBmcm9tIFBPU1RNQU4iLCJpYXQiOjE1MDM3Nzc5MjksImV4cCI6MTUwMzc3Nzk4OX0.REuhQ8XUqOE_09YLeyzJVzTxCwSYI0BzYP9J7q_FN64'
 
 // eslint-disable-next-line
 const should = chai.should();
@@ -89,6 +96,7 @@ describe('API Routes', () => {
     it('POST::HAPPYPATH it should post a new brew', (done) => {
       chai.request(server)
         .post('/api/v1/brews')
+        .set('Authorization', validToken)
         .send({
           name: 'New Brew',
           style: 'American Pale Lager',
@@ -121,6 +129,7 @@ describe('API Routes', () => {
     it('POST::SADPATH should return an error if theres missing parameters', (done) => {
       chai.request(server)
         .post('/api/v1/brews')
+        .set('Authorization', validToken)
         .send({
           name: 'New Brew',
           style: 'American Pale Lager',
@@ -138,6 +147,7 @@ describe('API Routes', () => {
     it('POST::SADPATH should return a 404 error if endpoint is incorrect', (done) => {
       chai.request(server)
         .post('/api/v1/brew')
+        .set('Authorization', validToken)
         .send({
           name: 'New Brew',
           style: 'American Pale Lager',
@@ -175,9 +185,33 @@ describe('API Routes', () => {
   });
 
   describe('ROUTE:: /api/v1/brews/:id', () => {
+    it('GET:: should return a brew', (done) => {
+      chai.request(server)
+        .get('/api/v1/brews/2265')
+        .end((err, res) => {
+          res.should.have.status(200);
+          res.should.be.json;
+          res.body.should.have.property('id');
+          res.body.should.have.property('abv');
+          res.body.abv.should.equal(0.066);
+          res.body.should.have.property('ibu');
+          res.body.ibu.should.equal(0.11);
+          res.body.should.have.property('name');
+          res.body.name.should.equal('Devil\'s Cup');
+          res.body.should.have.property('style');
+          res.body.style.should.equal('American Pale Ale (APA)');
+          res.body.should.have.property('ounces');
+          res.body.ounces.should.equal(12);
+          res.body.should.have.property('brewery_id');
+          res.body.brewery_id.should.equal(177);
+          done();
+        });
+    });
+
     it('DELETE:: should delete a specific brew', (done) => {
       chai.request(server)
         .delete('/api/v1/brews/1436')
+        .set('Authorization', validToken)
         .end((err, res) => {
           res.should.have.status(200);
           res.should.be.json;
