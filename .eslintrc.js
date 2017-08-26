@@ -5,7 +5,9 @@ module.exports = {
   ],
   "rules": {
     "radix": [0],
-    "arrow-body-style": [0]
+    "arrow-body-style": [0],
+    "no-else-return": [0],
+    "consistent-return": [0]
   },
   "env": {
     "browser": true,
