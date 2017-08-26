@@ -4,7 +4,8 @@ const config = require('../knexfile').test;
 const knex = require('knex')(config);
 const chai = require('chai');
 const chaiHttp = require('chai-http');
-const { app: server } = require('../server');
+const { app: server } = require('../src/server');
+const jwt = require('jsonwebtoken');
 
 // eslint-disable-next-line
 const should = chai.should();
@@ -33,6 +34,31 @@ describe('API Routes', () => {
   beforeEach((done) => {
     knex.seed.run()
       .then(() => done());
+  });
+
+  describe('ROUTE:: /auth', () => {
+    it('POST:: should return a valid JWT Token', (done) => {
+      chai.request(server)
+        .post('/auth')
+        .send({
+          email: 'bobloblaw@lawbob.bob',
+          first_name: 'bobbybobbob',
+          last_name: 'loblob',
+        })
+        .end((err, res) => {
+          res.should.have.status(201);
+          res.body.token.should.be.a('string');
+
+          const decoded = jwt.verify(res.body.token, 'test');
+          decoded.should.have.property('email');
+          decoded.email.should.equal('bobloblaw@lawbob.bob');
+          decoded.should.have.property('first_name');
+          decoded.first_name.should.equal('bobbybobbob');
+          decoded.should.have.property('last_name');
+          decoded.last_name.should.equal('loblob');
+          done();
+        });
+    });
   });
 
   describe('ROUTE:: /api/v1/brews', () => {
