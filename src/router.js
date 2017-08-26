@@ -27,10 +27,12 @@ router.post('/auth', controller.generateToken);
 router.get('/api/v1/brews', controller.getBrews);
 router.get('/api/v1/breweries', controller.getBreweries);
 router.post('/api/v1/brews', checkAuth, controller.postBrews);
-router.post('/api/v1/breweries', controller.postBreweries);
-router.delete('/api/v1/breweries/:id', controller.deleteBrewery);
-router.delete('/api/v1/brews/:id', controller.deleteBrew);
+router.post('/api/v1/breweries', checkAuth, controller.postBreweries);
+router.delete('/api/v1/breweries/:id', checkAuth, controller.deleteBrewery);
+router.delete('/api/v1/brews/:id', checkAuth, controller.deleteBrew);
 router.get('/api/v1/brews/:id', controller.specificBrew);
+// router.get('/api/v1/brewery/:id/brews', controller.breweryBrews);
+router.post('/api/v1/brewery/:id/brews', controller.postBreweryBrews);
 
 
 module.exports = router;

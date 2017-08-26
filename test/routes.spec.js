@@ -14,8 +14,6 @@ const payload = {
 const validToken = jwt.sign(payload, 'test', { expiresIn: '2m' })
 const invalidToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoidGhpcyBpcyBmcm9tIFBPU1RNQU4iLCJpYXQiOjE1MDM3Nzc5MjksImV4cCI6MTUwMzc3Nzk4OX0.REuhQ8XUqOE_09YLeyzJVzTxCwSYI0BzYP9J7q_FN64'
 
-
-
 // eslint-disable-next-line
 const should = chai.should();
 
@@ -209,9 +207,11 @@ describe('API Routes', () => {
           done();
         });
     });
+
     it('DELETE:: should delete a specific brew', (done) => {
       chai.request(server)
         .delete('/api/v1/brews/1436')
+        .set('Authorization', validToken)
         .end((err, res) => {
           res.should.have.status(200);
           res.should.be.json;
