@@ -84,16 +84,28 @@ app.post('/api/v1/breweries', (req, res) => {
     .catch(error => res.status(500).json({ error }));
 });
 
-app.delete('/api/v1/breweries/:id', (request, response) => {
-  const id = request.params.id;
+app.delete('/api/v1/breweries/:id', (req, res) => {
+  const id = req.params.id;
   db('breweries').where('id', id).del()
-    .then((res) => {
+    .then((obj) => {
       if (res > 0) {
-        return response.status(200).json(res);
+        return res.status(200).json(obj);
+      } else {
+        return res.status(404).json({ error: 'Resource does not exist' });
       }
-      return response.status(404).json({ error: 'Resource does not exist' });
     })
-    .catch(error => response.status(501).json({ error }));
+    .catch(error => res.status(501).json({ error }));
+});
+
+app.delete('/api/v1/brews/:id', (req, res) => {
+  const id = req.params.id;
+  db('brews').where('id', id).del().returning('*')
+    .then((obj) => {
+      return obj.length
+        ? res.status(200).json(obj[0])
+        : res.status(404).json({ error: 'Resource does not exist' });
+    })
+    .catch(error => res.status(501).json({ error }));
 });
 
 app.listen(port, () => {
