@@ -147,4 +147,18 @@ describe('API Routes', () => {
         });
     });
   });
+
+  describe('ROUTE:: /api/v1/brews/:id', () => {
+    it('DELETE:: should delete a specific brew', (done) => {
+      chai.request(server)
+        .delete('/api/v1/brews/1436')
+        .end((err, res) => {
+          console.log(res.body);
+          res.should.have.status(200);
+          res.should.be.json;
+          res.body.should.be.a('object');
+          done()
+        })
+    });
+  })
 });

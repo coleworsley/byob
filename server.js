@@ -96,6 +96,19 @@ app.delete('/api/v1/breweries/:id', (request, response) => {
     .catch(error => response.status(501).json({ error }));
 });
 
+app.delete('/api/v1/brews/:id', (request, response) => {
+  const id = request.params.id;
+  db('brews').where('id', id).del().returning('*')
+    .then((res) => {
+      console.log(res.body);
+      if (res > 0) {
+        return response.status(200).json(res[0]);
+      }
+      return response.status(404).json({ error: 'Resource does not exist' });
+    })
+    .catch(error => response.status(501).json({ error }));
+});
+
 app.listen(port, () => {
   // eslint-disable-next-line
   console.log(`App is listening on http://localhost:${port}`);
