@@ -60,7 +60,7 @@ describe('API Routes', () => {
         });
     });
 
-    it('POST:: it should post a new brew', (done) => {
+    it('POST::HAPPYPATH it should post a new brew', (done) => {
       chai.request(server)
         .post('/api/v1/brews')
         .send({
@@ -91,26 +91,43 @@ describe('API Routes', () => {
           done();
         });
     });
+
+    it('POST::SADPATH should return an error theres missing parameters', (done) => {
+      chai.request(server)
+        .post('/api/v1/brews')
+        .send({
+          name: 'New Brew',
+          style: 'American Pale Lager',
+          abv: 0.066,
+          ibu: 0.11,
+          ounces: 12,
+        })
+        .end((err, res) => {
+          res.should.have.status(422);
+          res.body.error.should.equal('Missing required parameter brewery_id');
+          done();
+        });
+    });
   });
 
-
-
-  it('should return all the brews', (done) => {
-    chai.request(server)
-      .get('/api/v1/breweries')
-      .end((err, res) => {
-        res.should.have.status(200);
-        res.should.be.json;
-        res.body.should.be.a('array');
-        res.body[0].should.have.property('id');
-        res.body[0].id.should.equal(408);
-        res.body[0].should.have.property('name');
-        res.body[0].name.should.equal('NorthGate Brewing');
-        res.body[0].should.have.property('city');
-        res.body[0].city.should.equal('Minneapolis');
-        res.body[0].should.have.property('state');
-        res.body[0].state.should.equal('MN');
-        done();
-      });
+  describe('ROUTE:: /api/v1/breweries', () => {
+    it('GET:: should return all the brews', (done) => {
+      chai.request(server)
+        .get('/api/v1/breweries')
+        .end((err, res) => {
+          res.should.have.status(200);
+          res.should.be.json;
+          res.body.should.be.a('array');
+          res.body[0].should.have.property('id');
+          res.body[0].id.should.equal(408);
+          res.body[0].should.have.property('name');
+          res.body[0].name.should.equal('NorthGate Brewing');
+          res.body[0].should.have.property('city');
+          res.body[0].city.should.equal('Minneapolis');
+          res.body[0].should.have.property('state');
+          res.body[0].state.should.equal('MN');
+          done();
+        });
+    });
   });
 });
