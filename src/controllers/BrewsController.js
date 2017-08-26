@@ -53,9 +53,19 @@ const deleteBrew = (req, res) => {
     .catch(error => res.status(501).json({ error }));
 };
 
+const getBreweryBrews = (req, res) => {
+  const id = req.params.id;
+
+  db('brews').where('brewery_id', id)
+    .select()
+    .then(brews => res.status(200).json(brews))
+    .catch(error => res.status(404).json(error));
+};
+
 module.exports = {
   deleteBrew,
   postBrews,
   specificBrew,
   getBrews,
+  getBreweryBrews,
 };
