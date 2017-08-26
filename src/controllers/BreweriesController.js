@@ -19,18 +19,49 @@ const postBreweries = (req, res) => {
 
 const deleteBrewery = (req, res) => {
   const id = req.params.id;
-  db('breweries').where('id', id).del()
-    .then((obj) => {
-      return obj.length
-        ? res.status(200).json(obj[0])
-        : res.status(404).json({ error: 'Resource does not exist' });
+
+  db('brews')
+    .where('brewery_id', id)
+    .del()
+    .returning('*')
+    .then((brews) => {
+      db('breweries')
+        .where('id', id)
+        .del()
+        .returning('*')
+        .then((brewery) => {
+          if (brewery.length) {
+            return res.status(200).json({
+              brewery: brewery[0],
+              brews,
+              message: 'Successful delete',
+            });
+          } else {
+            return res.status(404).json({
+              error: 'Resource does not exist',
+            });
+          }
+        });
     })
     .catch(error => res.status(501).json({ error }));
 };
 
+const updateBrewery = (req, res) => {
+  // endpoint = api/v1/breweries/:id;
+  const { id } = req.params;
+
+  db('breweries')
+    .where('id', id)
+    .update(req.body, '*')
+    .then((brewery) => {
+      return res.status(200).json(brewery);
+    })
+    .catch(error => res.status(500).json({ error }));
+};
 
 module.exports = {
   getBreweries,
   postBreweries,
   deleteBrewery,
+  updateBrewery,
 };

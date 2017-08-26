@@ -15,5 +15,6 @@ router.get('/api/v1/brewery/:id/brews', checkAuth, BrewsController.getBreweryBre
 router.get('/api/v1/breweries', BreweriesController.getBreweries);
 router.post('/api/v1/breweries', checkAuth, BreweriesController.postBreweries);
 router.delete('/api/v1/breweries/:id', checkAuth, BreweriesController.deleteBrewery);
+router.patch('api/v1/breweries/:id', checkAuth, BreweriesController.updateBrewery);
 
 module.exports = router;
