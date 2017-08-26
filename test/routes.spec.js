@@ -6,13 +6,14 @@ const chai = require('chai');
 const chaiHttp = require('chai-http');
 const { app: server } = require('../src/server');
 const jwt = require('jsonwebtoken');
+
 const payload = {
   email: 'bob@gmail.com',
   first_name: 'Robbie',
-  last_name: 'Lob'
-}
-const validToken = jwt.sign(payload, 'test', { expiresIn: '2m' })
-const invalidToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoidGhpcyBpcyBmcm9tIFBPU1RNQU4iLCJpYXQiOjE1MDM3Nzc5MjksImV4cCI6MTUwMzc3Nzk4OX0.REuhQ8XUqOE_09YLeyzJVzTxCwSYI0BzYP9J7q_FN64'
+  last_name: 'Lob',
+};
+const validToken = jwt.sign(payload, 'test', { expiresIn: '2m' });
+const invalidToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoidGhpcyBpcyBmcm9tIFBPU1RNQU4iLCJpYXQiOjE1MDM3Nzc5MjksImV4cCI6MTUwMzc3Nzk4OX0.REuhQ8XUqOE_09YLeyzJVzTxCwSYI0BzYP9J7q_FN64';
 
 // eslint-disable-next-line
 const should = chai.should();
@@ -63,6 +64,24 @@ describe('API Routes', () => {
           decoded.first_name.should.equal('bobbybobbob');
           decoded.should.have.property('last_name');
           decoded.last_name.should.equal('loblob');
+          done();
+        });
+    });
+    it('POST::SADPATH should return an error if token is invalid', (done) => {
+      chai.request(server)
+        .post('/api/v1/brews')
+        .set('Authorization', invalidToken)
+        .send({
+          name: 'New Brew',
+          style: 'American Pale Lager',
+          brewery_id: 408,
+          abv: 0.066,
+          ibu: 0.11,
+          ounces: 12,
+        })
+        .end((err, res) => {
+          res.should.have.status(403);
+          res.body.error.should.equal('Invalid token');
           done();
         });
     });
@@ -182,6 +201,28 @@ describe('API Routes', () => {
           done();
         });
     });
+    it('GET::SADPATH should return a 404 error if you have the the wrong endpoint', (done) => {
+      chai.request(server)
+        .get('/api/v1/brewry')
+        .end((error, response) => {
+          response.should.have.status(404);
+          done();
+        });
+    });
+    it('POST::SADPATH should return an error if required info Missing', (done) => {
+      chai.request(server)
+        .post('/api/v1/breweries')
+        .set('Authorization', validToken)
+        .send({
+          city: 'Denver',
+          state: 'CO',
+        })
+        .end((err, res) => {
+          res.should.have.status(422);
+          res.body.error.should.equal('Missing required parameter name');
+          done();
+        });
+    });
   });
 
   describe('ROUTE:: /api/v1/brews/:id', () => {
@@ -229,6 +270,31 @@ describe('API Routes', () => {
           res.body.ounces.should.equal(12);
           res.body.should.have.property('brewery_id');
           res.body.brewery_id.should.equal(408);
+          done();
+        });
+    });
+  });
+
+  describe('ROUTE:: /api/v1/brewery/:id/brews', () => {
+    it('GET:: should get all the beers that have been added to a brewery', (done) => {
+      chai.request(server)
+        .get('/api/v1/brewery/177/brews')
+        .end((err, res) => {
+          res.should.have.status(200);
+          res.should.be.json;
+          res.body[0].should.have.property('id');
+          res.body[0].should.have.property('abv');
+          res.body[0].abv.should.equal(0.066);
+          res.body[0].should.have.property('ibu');
+          res.body[0].ibu.should.equal(0.11);
+          res.body[0].should.have.property('name');
+          res.body[0].name.should.equal('Devil\'s Cup');
+          res.body[0].should.have.property('style');
+          res.body[0].style.should.equal('American Pale Ale (APA)');
+          res.body[0].should.have.property('ounces');
+          res.body[0].ounces.should.equal(12);
+          res.body[0].should.have.property('brewery_id');
+          res.body[0].brewery_id.should.equal(177);
           done();
         });
     });

@@ -8,9 +8,12 @@ const checkAuth = ((req, res, next) => {
       error: 'You must be authorized to use this endpoint',
     });
   }
-  const decoded = jwt.verify(token, process.env.SECRETKEY);
 
-  if (!decoded) {
+  let decoded = '';
+
+  try {
+    decoded = jwt.verify(token, process.env.SECRETKEY);
+  } catch (error) {
     return res.status(403).json({
       error: 'Invalid token',
     });
@@ -30,4 +33,4 @@ const generateToken = (req, res) => {
 module.exports = {
   generateToken,
   checkAuth,
-}
+};

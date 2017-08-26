@@ -10,7 +10,8 @@ router.post('/auth', AuthController.generateToken);
 router.get('/api/v1/brews', BrewsController.getBrews);
 router.post('/api/v1/brews', checkAuth, BrewsController.postBrews);
 router.delete('/api/v1/brews/:id', checkAuth, BrewsController.deleteBrew);
-router.get('/api/v1/brewery/:id/brews', checkAuth, BrewsController.getBreweryBrews);
+router.get('/api/v1/brewery/:id/brews', BrewsController.getBreweryBrews);
+router.get('/api/v1/brews/:id', BrewsController.specificBrew);
 
 router.get('/api/v1/breweries', BreweriesController.getBreweries);
 router.post('/api/v1/breweries', checkAuth, BreweriesController.postBreweries);

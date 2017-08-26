@@ -12,6 +12,14 @@ const getBreweries = (req, res) => {
 const postBreweries = (req, res) => {
   const newBrewery = req.body;
 
+  for (let requiredParam of ['name']) {
+    if (!newBrewery[requiredParam]) {
+      return res.status(422).json({
+        error: `Missing required parameter ${requiredParam}`,
+      });
+    }
+  }
+
   db('breweries').insert(newBrewery, 'id')
     .then(brewery => res.status(201).json({ id: brewery[0] }))
     .catch(error => res.status(500).json({ error }));
