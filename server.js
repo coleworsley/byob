@@ -55,12 +55,25 @@ app.get('/api/v1/breweries', (req, res) => {
     .catch(error => res.status(404).json({ error }));
 });
 
-app.post('/api/v1/brews', checkAuth, (req, res) => {
+app.post('/api/v1/brews', (req, res) => {
   const newBrew = req.body;
 
-  db('brews').insert(newBrew, 'id')
-    .then(brew => res.status(201).json({ id: brew[0] }))
-    .catch(error => res.status(500).json({ error }));
+  for (let requiredParam of ['brewery_id', 'name', 'style']) {
+    if (!newBrew[requiredParam]) {
+      return res.status(422).json({
+        error: `Missing required parameter ${requiredParam}`,
+      });
+    }
+  }
+
+  db('brews')
+    .insert(req.body, '*')
+    .then((brew) => {
+      return res.status(200).json(brew[0]);
+    })
+    .catch((error) => {
+      return res.status(500).json({ error });
+    });
 });
 
 app.post('/api/v1/breweries', (req, res) => {
