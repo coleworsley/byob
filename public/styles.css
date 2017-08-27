@@ -33,3 +33,20 @@ button:hover {
   background-color: #1c4d66;
   color: #fff;
 }
+
+.token-container {
+  height: 175px;
+  width: 600px;
+  word-wrap: break-word;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.white {
+  background-color: #fff;
+}
+
+.token {
+  font-size: 20px;
+  font-family: 'Open Sans', sans-serif;
+}
