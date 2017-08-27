@@ -204,11 +204,25 @@ describe('API Routes', () => {
     it('GET::SADPATH should return a 404 error if you have the the wrong endpoint', (done) => {
       chai.request(server)
         .get('/api/v1/brewry')
-        .end((error, response) => {
-          response.should.have.status(404);
+        .end((err, res) => {
+          res.should.have.status(404);
           done();
         });
     });
+
+    it('GET::HAPPYPATH QUERY PARAMETER should return selected breweries', (done) => {
+      chai.request(server)
+        .get('/api/v1/breweries?state=KY')
+        .end((err, res) => {
+          res.should.have.status(200);
+          res.should.be.json;
+          res.body.should.be.a('array');
+          res.body.length.should.equal(1);
+          res.body[0].name.should.equal('Against the Grain Brewery');
+          done();
+        });
+    });
+
     it('POST::SADPATH should return an error if required info Missing', (done) => {
       chai.request(server)
         .post('/api/v1/breweries')

@@ -3,9 +3,21 @@ const config = require('../../knexfile')[env];
 const db = require('knex')(config);
 
 const getBreweries = (req, res) => {
+  const allowedParams = ['name', 'state', 'city'];
+
   db('breweries')
+    .modify((query) => {
+      for (const param of allowedParams) {
+        if (req.query[param]) {
+          return query.where(param, req.query[param]);
+        }
+      }
+      return null;
+    })
     .select()
-    .then(breweries => res.status(200).json(breweries))
+    .then((breweries) => {
+      return res.status(200).json(breweries);
+    })
     .catch(error => res.status(404).json({ error }));
 };
 
