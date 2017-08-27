@@ -287,6 +287,51 @@ describe('API Routes', () => {
           done();
         });
     });
+
+    it('PATCH::HAPPYPATH should update 1 or more brew fields', (done) => {
+      chai.request(server)
+        .patch('/api/v1/brews/2265')
+        .set('Authorization', validToken)
+        .send({
+          name: 'DevilzzCup',
+          style: 'AMERICAN',
+        })
+        .end((err, res) => {
+          res.should.have.status(200);
+          res.body[0].should.be.a('object');
+          res.body[0].should.have.property('name');
+          res.body[0].name.should.equal('DevilzzCup');
+          res.body[0].should.have.property('id');
+          res.body[0].id.should.equal(2265);
+          res.body[0].should.have.property('style');
+          res.body[0].style.should.equal('AMERICAN');
+
+          chai.request(server)
+            .get('/api/v1/brews/2265')
+            .end((err, res) => {
+              res.should.have.status(200);
+              res.body.should.have.property('name');
+              res.body.name.should.equal('DevilzzCup');
+              res.body.should.have.property('style');
+              res.body.style.should.equal('AMERICAN');
+              done();
+            });
+        });
+    });
+
+    it('PATCH::SADPATH should return an error if invalid parameters are passed', (done) => {
+      chai.request(server)
+        .patch('/api/v1/brews/2265')
+        .set('Authorization', validToken)
+        .send({ nameeee: 'Best beer ever!' })
+        .end((err, res) => {
+          res.should.have.status(400);
+          res.body.should.be.a('object');
+          res.body.should.have.property('error');
+          res.body.error.should.equal('Invalid parameter(s): nameeee');
+          done();
+        });
+    });
   });
 
   describe('ROUTE:: /api/v1/brewery/:id/brews', () => {
