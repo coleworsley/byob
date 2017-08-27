@@ -341,7 +341,7 @@ describe('API Routes', () => {
         });
     });
 
-    it('DELETE:: SADPATH should return an error if the resource doesn\'t exist', (done) => {
+    it('DELETE::SADPATH should return an error if the resource doesn\'t exist', (done) => {
       chai.request(server)
         .delete('/api/v1/breweries/100')
         .set('Authorization', validToken)
@@ -350,6 +350,34 @@ describe('API Routes', () => {
           res.body.should.have.property('error');
           res.body.error.should.equal('Resource does not exist');
           done();
+        });
+    });
+
+    it('PATCH::HAPPYPATH should update 1 or more brewery fields', (done) => {
+      chai.request(server)
+        .patch('/api/v1/breweries/408')
+        .set('Authorization', validToken)
+        .send({ name: 'Brand New BREWSKI!' })
+        .end((err, res) => {
+          res.should.have.status(200);
+          res.body.should.be.a('object');
+          res.body.should.have.property('name');
+          res.body.name.should.equal('Brand New BREWSKI!');
+          res.body.should.have.property('id');
+          res.body.id.should.equal(408);
+          res.body.should.have.property('city');
+          res.body.city.should.equal('Minneapolis');
+          res.body.should.have.property('state');
+          res.body.state.should.equal('MN');
+
+          chai.request(server)
+            .get('/api/v1/breweries')
+            .end((err, res) => {
+              res.should.have.status(200);
+              res.body[1].should.have.property('name');
+              res.body[1].name.should.equal('Brand New BREWSKI!');
+              done();
+            });
         });
     });
   });
