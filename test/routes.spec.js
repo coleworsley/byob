@@ -380,5 +380,19 @@ describe('API Routes', () => {
             });
         });
     });
+
+    it('PATCH::SADPATH should return an error if invalid parameters are passed', (done) => {
+      chai.request(server)
+        .patch('/api/v1/breweries/408')
+        .set('Authorization', validToken)
+        .send({ nameeee: 'Brand New BREWSKI!' })
+        .end((err, res) => {
+          res.should.have.status(400);
+          res.body.should.be.a('object');
+          res.body.should.have.property('error');
+          res.body.error.should.equal('Invalid parameter(s): nameeee');
+          done();
+        });
+    });
   });
 });
