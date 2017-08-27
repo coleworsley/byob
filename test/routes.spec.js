@@ -45,7 +45,7 @@ describe('API Routes', () => {
   });
 
   describe('ROUTE:: /auth', () => {
-    it('POST:: should return a valid JWT Token', (done) => {
+    it('POST:: HAPPYPATH should return a valid JWT Token', (done) => {
       chai.request(server)
         .post('/auth')
         .send({
@@ -88,7 +88,7 @@ describe('API Routes', () => {
   });
 
   describe('ROUTE:: /api/v1/brews', () => {
-    it('GET:: should return all the brews', (done) => {
+    it('GET:: HAPPYPATH should return all the brews', (done) => {
       chai.request(server)
         .get('/api/v1/brews')
         .end((err, res) => {
@@ -183,7 +183,7 @@ describe('API Routes', () => {
   });
 
   describe('ROUTE:: /api/v1/breweries', () => {
-    it('GET:: should return all the brews', (done) => {
+    it('GET::HAPPYPATH should return all the brews', (done) => {
       chai.request(server)
         .get('/api/v1/breweries')
         .end((err, res) => {
@@ -226,7 +226,7 @@ describe('API Routes', () => {
   });
 
   describe('ROUTE:: /api/v1/brews/:id', () => {
-    it('GET:: should return a brew', (done) => {
+    it('GET::HAPPYPATH should return a brew', (done) => {
       chai.request(server)
         .get('/api/v1/brews/2265')
         .end((err, res) => {
@@ -249,7 +249,7 @@ describe('API Routes', () => {
         });
     });
 
-    it('DELETE:: should delete a specific brew', (done) => {
+    it('DELETE::HAPPYPATH should delete a specific brew', (done) => {
       chai.request(server)
         .delete('/api/v1/brews/1436')
         .set('Authorization', validToken)
@@ -276,7 +276,7 @@ describe('API Routes', () => {
   });
 
   describe('ROUTE:: /api/v1/brewery/:id/brews', () => {
-    it('GET:: should get all the beers that have been added to a brewery', (done) => {
+    it('GET::HAPPYPATH should get all the beers that have been added to a brewery', (done) => {
       chai.request(server)
         .get('/api/v1/brewery/177/brews')
         .end((err, res) => {
@@ -295,6 +295,102 @@ describe('API Routes', () => {
           res.body[0].ounces.should.equal(12);
           res.body[0].should.have.property('brewery_id');
           res.body[0].brewery_id.should.equal(177);
+          done();
+        });
+    });
+  });
+
+  describe('ROUTE:: /api/v1/breweries/:id', () => {
+    it('DELETE::HAPPYPATH should delete a brewery and all of the associated brews', (done) => {
+      chai.request(server)
+        .get('/api/v1/breweries')
+        .end((err, res) => {
+          res.should.have.status(200);
+          res.body.length.should.equal(2);
+
+          chai.request(server)
+            .delete('/api/v1/breweries/408')
+            .set('Authorization', validToken)
+            .end((err, res) => {
+              res.should.have.status(200);
+              res.should.be.json;
+              res.body.should.be.a('object');
+              res.body.should.have.property('brewery');
+              res.body.brewery.should.have.property('id');
+              res.body.brewery.id.should.equal(408);
+              res.body.should.have.property('brews');
+              res.body.brews.length.should.equal(1);
+              res.body.brews[0].should.have.property('id');
+              res.body.brews[0].id.should.equal(1436);
+
+              chai.request(server)
+                .get('/api/v1/breweries')
+                .end((err, res) => {
+                  res.should.have.status(200);
+                  res.body.length.should.equal(1);
+
+                  chai.request(server)
+                    .get('/api/v1/brews/1436')
+                    .end((err, res) => {
+                      res.should.have.status(404);
+                      res.body.error.should.equal('Resource does not exist');
+                      done();
+                    });
+                });
+            });
+        });
+    });
+
+    it('DELETE::SADPATH should return an error if the resource doesn\'t exist', (done) => {
+      chai.request(server)
+        .delete('/api/v1/breweries/100')
+        .set('Authorization', validToken)
+        .end((err, res) => {
+          res.should.have.status(404);
+          res.body.should.have.property('error');
+          res.body.error.should.equal('Resource does not exist');
+          done();
+        });
+    });
+
+    it('PATCH::HAPPYPATH should update 1 or more brewery fields', (done) => {
+      chai.request(server)
+        .patch('/api/v1/breweries/408')
+        .set('Authorization', validToken)
+        .send({ name: 'Brand New BREWSKI!' })
+        .end((err, res) => {
+          res.should.have.status(200);
+          res.body.should.be.a('object');
+          res.body.should.have.property('name');
+          res.body.name.should.equal('Brand New BREWSKI!');
+          res.body.should.have.property('id');
+          res.body.id.should.equal(408);
+          res.body.should.have.property('city');
+          res.body.city.should.equal('Minneapolis');
+          res.body.should.have.property('state');
+          res.body.state.should.equal('MN');
+
+          chai.request(server)
+            .get('/api/v1/breweries')
+            .end((err, res) => {
+              res.should.have.status(200);
+              res.body[1].should.have.property('name');
+              res.body[1].name.should.equal('Brand New BREWSKI!');
+              done();
+            });
+        });
+    });
+
+    it('PATCH::SADPATH should return an error if invalid parameters are passed', (done) => {
+      chai.request(server)
+        .patch('/api/v1/breweries/408')
+        .set('Authorization', validToken)
+        .send({ nameeee: 'Brand New BREWSKI!' })
+        .end((err, res) => {
+          res.should.have.status(400);
+          res.body.should.be.a('object');
+          res.body.should.have.property('error');
+          res.body.error.should.equal('Invalid parameter(s): nameeee');
           done();
         });
     });

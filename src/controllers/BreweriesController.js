@@ -70,7 +70,7 @@ const updateBrewery = (req, res) => {
     .where('id', id)
     .update(req.body, '*')
     .then((brewery) => {
-      return res.status(200).json(brewery);
+      return res.status(200).json(brewery[0]);
     })
     .catch(error => res.status(500).json({ error }));
 };
