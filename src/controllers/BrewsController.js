@@ -62,10 +62,33 @@ const getBreweryBrews = (req, res) => {
     .catch(error => res.status(404).json(error));
 };
 
+const updateBrew = (req, res) => {
+  const optionalParams = ['name', 'style', 'abv', 'ibu', 'brewery_id', 'ounces'];
+  const errors = Object.keys(req.body).filter(e => !optionalParams.includes(e));
+
+  if (errors.length) {
+    return res.status(400).json({
+      error: `Invalid parameter(s): ${errors}`,
+    });
+  }
+
+  const { id } = req.params;
+
+  db('brews')
+    .where('id', id)
+    .update(req.body, '*')
+    .then((brew) => {
+      return res.status(200).json(brew);
+    })
+    .catch(error => res.status(500).json({ error }));
+};
+
+
 module.exports = {
   deleteBrew,
   postBrews,
   specificBrew,
   getBrews,
   getBreweryBrews,
+  updateBrew,
 };
