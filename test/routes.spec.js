@@ -340,5 +340,17 @@ describe('API Routes', () => {
             });
         });
     });
+
+    it('DELETE:: SADPATH should return an error if the resource doesn\'t exist', (done) => {
+      chai.request(server)
+        .delete('/api/v1/breweries/100')
+        .set('Authorization', validToken)
+        .end((err, res) => {
+          res.should.have.status(404);
+          res.body.should.have.property('error');
+          res.body.error.should.equal('Resource does not exist');
+          done();
+        });
+    });
   });
 });
