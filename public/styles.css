@@ -1,0 +1,35 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #3091c1;
+}
+
+form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 200px;
+}
+
+input {
+  margin-bottom: 15px;
+  border: none;
+  padding-left: 5px;
+  height: 20px;
+  font-size: 15px;
+}
+
+button {
+  font-size: 15px;
+  border: none;
+  background-color: #fff;
+  color: #1c4d66;
+}
+
+button:hover {
+  background-color: #1c4d66;
+  color: #fff;
+}
