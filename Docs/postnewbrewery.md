@@ -1,49 +1,30 @@
-**Show User**
+**Post Brewery**
 ----
-  Returns json data about a single user.
+  Posts a new brewery.
 
 * **URL**
 
-  /users/:id
+  /api/v1/breweries
 
 * **Method:**
 
-  `GET`
-  
-*  **URL Params**
-
-   **Required:**
- 
-   `id=[integer]`
+  `POST`
 
 * **Data Params**
 
-  None
+  Name
 
 * **Success Response:**
 
-  * **Code:** 200 <br />
-    **Content:** `{ id : 12, name : "Michael Bloom" }`
+  * **Code:** 201 <br />
+    **Content:** `{ name : "Black Sheep Brewer", city: "Kansas City", state: "KS" }`
  
 * **Error Response:**
 
-  * **Code:** 404 NOT FOUND <br />
-    **Content:** `{ error : "User doesn't exist" }`
+  * **Code:** 500 Server Error <br />
+    **Content:** `{ error : "Internal server error" }`
 
   OR
 
-  * **Code:** 401 UNAUTHORIZED <br />
-    **Content:** `{ error : "You are unauthorized to make this request." }`
-
-* **Sample Call:**
-
-  ```javascript
-    $.ajax({
-      url: "/users/1",
-      dataType: "json",
-      type : "GET",
-      success : function(r) {
-        console.log(r);
-      }
-    });
-  ```
+  * **Code:** 422 Unprocessable Entity <br />
+    **Content:** `{ error : "Missing required parameter name." }`
