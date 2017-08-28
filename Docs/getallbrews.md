@@ -13,33 +13,28 @@
 * **Success Response:**
 
   * **Code:** 200 <br />
-    **Content:** `[
-    {
-      "id": 11,
-      "original_id": 2099,
-      "name": "Sophomoric Saison",
-      "style": "Saison / Farmhouse Ale",
-      "abv": 0.072,
-      "ibu": null,
-      "ounces": 12,
-      "brewery_id": 178
-    }
-  ]`
+    **Content:** 
+    
+    ```
+    [
+      {
+        "id": 11,
+        "original_id": 2099,
+        "name": "Sophomoric Saison",
+        "style": "Saison / Farmhouse Ale",
+        "abv": 0.072,
+        "ibu": null,
+        "ounces": 12,
+        "brewery_id": 178
+      }
+    ]
+    ```
  
 * **Error Response:**
 
   * **Code:** 404 NOT FOUND <br />
     **Content:** `{ error : "...(description about error)..." }`
 
-  OR
-
-  * **Code:** 403 UNAUTHORIZED <br />
-    **Content:** `{ error : "Invalid token." }`
-    
-  OR
-
-  * **Code:** 403 UNAUTHORIZED <br />
-    **Content:** `{ error : "You must be authorized to use this endpoint." }`
 
 * **Sample Call:**
 
