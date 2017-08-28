@@ -15,8 +15,18 @@ $('button').on('click', (e) => {
     }),
   })
     .then(res => res.json())
-    .then((token) => {
-      $('.token-container').append(`<div class="token">Your token: ${token.token}</div>`);
+    .then(({ token }) => {
+      document.querySelector('.token-container').innerHTML = `
+        <div class="token">
+          <p>Token: ${token}</p>
+        </div>
+      `;
     })
-    .catch(error => console.log(error));
+    .catch((error) => {
+      document.querySelector('.token-container').innerHTML = `
+      <div class="token">
+        Error: ${error}
+      </div>
+    `;
+    });
 });
