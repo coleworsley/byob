@@ -17,12 +17,21 @@
 
 * **Data Params**
 
-  None
+  email and app name
 
 * **Success Response:**
 
-  * **Code:** 200 <br />
+  * **Code:** 201 <br />
     **Content:** `{ token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...." }`
+    
+ * **Error Response:**
+ * **Code** 403 <br />
+   **Content:** `{error: 'You must be authorized to use this endpoint}`
+   
+   OR
+   * **Code** 403 <br />
+   **Content:** `{error: 'Invalid token}`
+   
 
 * **Sample Call:**
 
@@ -32,7 +41,7 @@
     'method': 'POST',
     'body': {
       email: 'example@something.io',
-      app: 'exampleApp',
+      appName: 'exampleApp',
     },
   })
   .then(res => res.json())
