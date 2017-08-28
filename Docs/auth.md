@@ -23,15 +23,6 @@
 
   * **Code:** 201 <br />
     **Content:** `{ token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...." }`
-    
- * **Error Response:**
- * **Code** 403 <br />
-   **Content:** `{error: 'You must be authorized to use this endpoint}`
-   
-   OR
-   * **Code** 403 <br />
-   **Content:** `{error: 'Invalid token}`
-   
 
 * **Sample Call:**
 
