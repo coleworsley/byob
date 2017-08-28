@@ -4,23 +4,53 @@
 
 * **URL**
 
-  /api/v1/breweries
+  `/api/v1/breweries`
 
 * **Method:**
 
   `GET`
   
+*  **URL Params**
+
+   **Required:**
+ 
+   `none`
+
+* **Data Params**
+
+   **Required:**
+ 
+   `none`
+
 * **Success Response:**
 
   * **Code:** 200 <br />
-    **Content:** `{ name: "Denver Beer Co.", city : "Denver", state: "CO" }`
+    **Content:** `[
+    { name: "Denver Beer Co.", city : "Denver", state: "CO" }
+  ]`
  
 * **Error Response:**
 
   * **Code:** 404 NOT FOUND <br />
-    **Content:** `{ error : "Could not get any response" }`
+    **Content:** `{ error : "...(description about error)..." }`
 
   OR
 
-  * **Code:** 401 UNAUTHORIZED <br />
-    **Content:** `{ error : "You are unauthorized to make this request." }`
+  * **Code:** 403 UNAUTHORIZED <br />
+    **Content:** `{ error : "Invalid token." }`
+    
+  OR
+
+  * **Code:** 403 UNAUTHORIZED <br />
+    **Content:** `{ error : "You must be authorized to use this endpoint." }`
+
+* **Sample Call:**
+
+  ```javascript
+      fetch('/api/v1/breweries', {
+        'method': 'GET',
+      })
+      .then(res => res.json())
+      .then(token => console.log(token))
+      .catch(error => console.log(error));
+  ```
