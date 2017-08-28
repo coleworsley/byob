@@ -10,17 +10,6 @@
 
   `GET`
   
-*  **URL Params**
-
-   **Required:**
- 
-   `none`
-
-* **Data Params**
-
-   **Required:**
- 
-   `none`
 
 * **Success Response:**
 
