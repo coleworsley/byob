@@ -69,7 +69,7 @@
   ```javascript
       fetch('/api/v1/brews/', {
         'Authorization': 'token',
-        'method': 'DELETE',
+        'method': 'POST',
         'Content-Type': 'application/json',
         'body': {
           brewery_id: 1000,
