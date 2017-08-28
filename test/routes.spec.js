@@ -112,6 +112,15 @@ describe('API Routes', () => {
         });
     });
 
+    it('GET::SADPATH should return a 404 error if you have the the wrong endpoint', (done) => {
+      chai.request(server)
+        .get('/api/v1/brewzz')
+        .end((err, res) => {
+          res.should.have.status(404);
+          done();
+        });
+    });
+
     it('POST::HAPPYPATH it should post a new brew', (done) => {
       chai.request(server)
         .post('/api/v1/brews')
@@ -183,7 +192,7 @@ describe('API Routes', () => {
   });
 
   describe('ROUTE:: /api/v1/breweries', () => {
-    it('GET::HAPPYPATH should return all the brews', (done) => {
+    it('GET::HAPPYPATH should return all the breweries', (done) => {
       chai.request(server)
         .get('/api/v1/breweries')
         .end((err, res) => {
@@ -201,6 +210,7 @@ describe('API Routes', () => {
           done();
         });
     });
+
     it('GET::SADPATH should return a 404 error if you have the the wrong endpoint', (done) => {
       chai.request(server)
         .get('/api/v1/brewry')
@@ -219,6 +229,15 @@ describe('API Routes', () => {
           res.body.should.be.a('array');
           res.body.length.should.equal(1);
           res.body[0].name.should.equal('Against the Grain Brewery');
+          done();
+        });
+    });
+
+    it('GET::SADPATH QUERY PARAMETER should return a 404 error if you have the the wrong endpoint', (done) => {
+      chai.request(server)
+        .get('/api/v1/breweries/state=KY')
+        .end((err, res) => {
+          res.should.have.status(404);
           done();
         });
     });
@@ -263,6 +282,15 @@ describe('API Routes', () => {
         });
     });
 
+    it('GET::SADPATH should return a 404 error if endpoint is incorrect', (done) => {
+      chai.request(server)
+        .get('/api/v1/brews/563820')
+        .end((err, res) => {
+          res.should.have.status(404);
+          done();
+        });
+    });
+
     it('DELETE::HAPPYPATH should delete a specific brew', (done) => {
       chai.request(server)
         .delete('/api/v1/brews/1436')
@@ -284,6 +312,18 @@ describe('API Routes', () => {
           res.body.ounces.should.equal(12);
           res.body.should.have.property('brewery_id');
           res.body.brewery_id.should.equal(408);
+          done();
+        });
+    });
+
+    it('DELETE::SADPATH should return an error if the resource doesn\'t exist', (done) => {
+      chai.request(server)
+        .delete('/api/v1/brews/100000')
+        .set('Authorization', validToken)
+        .end((err, res) => {
+          res.should.have.status(404);
+          res.body.should.have.property('error');
+          res.body.error.should.equal('Resource does not exist');
           done();
         });
     });
@@ -354,6 +394,14 @@ describe('API Routes', () => {
           res.body[0].ounces.should.equal(12);
           res.body[0].should.have.property('brewery_id');
           res.body[0].brewery_id.should.equal(177);
+          done();
+        });
+    });
+    it('GET::SADPATH should error with a 404 if endpoint is wrong', (done) => {
+      chai.request(server)
+        .get('/api/v1/brewsery/177/brews')
+        .end((err, res) => {
+          res.should.have.status(404);
           done();
         });
     });
