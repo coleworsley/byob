@@ -1,10 +1,10 @@
-**Show User**
+**Get All Brews(Beers)**
 ----
-  Returns json data about a single user.
+  Returns json data about all the brews in the database.
 
 * **URL**
 
-  /users/:id
+  `/api/v1/brews`
 
 * **Method:**
 
@@ -14,36 +14,54 @@
 
    **Required:**
  
-   `id=[integer]`
+   `none`
 
 * **Data Params**
 
-  None
+   **Required:**
+ 
+   `none`
 
 * **Success Response:**
 
   * **Code:** 200 <br />
-    **Content:** `{ id : 12, name : "Michael Bloom" }`
+    **Content:** `[
+    {
+      "id": 11,
+      "original_id": 2099,
+      "name": "Sophomoric Saison",
+      "style": "Saison / Farmhouse Ale",
+      "abv": 0.072,
+      "ibu": null,
+      "ounces": 12,
+      "brewery_id": 178,
+      "created_at": "2017-08-26T17:48:41.486Z",
+      "updated_at": "2017-08-26T17:48:41.486Z"
+    }
+  ]`
  
 * **Error Response:**
 
   * **Code:** 404 NOT FOUND <br />
-    **Content:** `{ error : "User doesn't exist" }`
+    **Content:** `{ error : "...(description about error)..." }`
 
   OR
 
-  * **Code:** 401 UNAUTHORIZED <br />
-    **Content:** `{ error : "You are unauthorized to make this request." }`
+  * **Code:** 403 UNAUTHORIZED <br />
+    **Content:** `{ error : "Invalid token." }`
+    
+  OR
+
+  * **Code:** 403 UNAUTHORIZED <br />
+    **Content:** `{ error : "You must be authorized to use this endpoint." }`
 
 * **Sample Call:**
 
   ```javascript
-    $.ajax({
-      url: "/users/1",
-      dataType: "json",
-      type : "GET",
-      success : function(r) {
-        console.log(r);
-      }
-    });
+      fetch('/api/v1/brews', {
+        'method': 'GET',
+      })
+      .then(res => res.json())
+      .then(token => console.log(token))
+      .catch(error => console.log(error));
   ```
