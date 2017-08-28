@@ -1,4 +1,4 @@
-**Delete a Brew**
+**Get a Specific Brew**
 ----
   Returns a specific brew from the database.
 
