@@ -9,18 +9,6 @@
 * **Method:**
 
   `GET`
-  
-*  **URL Params**
-
-   **Required:**
- 
-   `none`
-
-* **Data Params**
-
-   **Required:**
- 
-   `none`
 
 * **Success Response:**
 
@@ -34,9 +22,7 @@
       "abv": 0.072,
       "ibu": null,
       "ounces": 12,
-      "brewery_id": 178,
-      "created_at": "2017-08-26T17:48:41.486Z",
-      "updated_at": "2017-08-26T17:48:41.486Z"
+      "brewery_id": 178
     }
   ]`
  
