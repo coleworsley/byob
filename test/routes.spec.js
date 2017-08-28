@@ -8,9 +8,9 @@ const { app: server } = require('../src/server');
 const jwt = require('jsonwebtoken');
 
 const payload = {
-  email: 'bob@gmail.com',
-  first_name: 'Robbie',
-  last_name: 'Lob',
+  email: 'bob@turing.io',
+  appName: 'BYOB',
+  admin: true,
 };
 const validToken = jwt.sign(payload, 'test', { expiresIn: '2m' });
 const invalidToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoidGhpcyBpcyBmcm9tIFBPU1RNQU4iLCJpYXQiOjE1MDM3Nzc5MjksImV4cCI6MTUwMzc3Nzk4OX0.REuhQ8XUqOE_09YLeyzJVzTxCwSYI0BzYP9J7q_FN64';
@@ -49,9 +49,8 @@ describe('API Routes', () => {
       chai.request(server)
         .post('/auth')
         .send({
-          email: 'bobloblaw@lawbob.bob',
-          first_name: 'bobbybobbob',
-          last_name: 'loblob',
+          email: 'bobloblaw@turing.io',
+          appName: 'BYOB',
         })
         .end((err, res) => {
           res.should.have.status(201);
@@ -59,11 +58,9 @@ describe('API Routes', () => {
 
           const decoded = jwt.verify(res.body.token, 'test');
           decoded.should.have.property('email');
-          decoded.email.should.equal('bobloblaw@lawbob.bob');
-          decoded.should.have.property('first_name');
-          decoded.first_name.should.equal('bobbybobbob');
-          decoded.should.have.property('last_name');
-          decoded.last_name.should.equal('loblob');
+          decoded.email.should.equal('bobloblaw@turing.io');
+          decoded.should.have.property('appName');
+          decoded.appName.should.equal('BYOB');
           done();
         });
     });

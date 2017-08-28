@@ -34,7 +34,7 @@
   * **Code:** 200 <br />
     **Content:** 
     
-```
+```javascript
     {
       "id": 11,
       "original_id": 2099,
@@ -68,6 +68,7 @@
 
   ```javascript
       fetch('/api/v1/brews/11', {
+        'Authorization': 'token',
         'method': 'DELETE',
       })
       .then(res => res.json())
