@@ -20,6 +20,7 @@
 
   * **Code:** 200 <br />
     **Content:** 
+    
     ``` javascript
     {
       "id": 11,
@@ -32,7 +33,8 @@
       "brewery_id": 178,
       "created_at": "2017-08-26T17:48:41.486Z",
       "updated_at": "2017-08-26T17:48:41.486Z"
-    }```
+    }
+    ```
  
 * **Error Response:**
 
