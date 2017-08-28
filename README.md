@@ -15,19 +15,19 @@ Currently, return format for all endpoints is [JSON](http://json.org/ "JSON").
 - **[<code>POST</code> /auth](https://github.com/buji405/byob/blob/master/Docs/auth.md)**
 
 #### Brews Resources
-- **[<code>GET</code> /brews](https://github.com/buji405/byob/blob/master/Docs/getBrews.md)**
-- **[<code>POST</code> /brews](https://github.com/buji405/byob/blob/master/Docs/postBrews.md)**
+- **[<code>GET</code> /brews](https://github.com/buji405/byob/blob/master/Docs/getallbrews.md)**
+- **[<code>POST</code> /brews](https://github.com/buji405/byob/blob/master/Docs/postnewbrew.md)**
 
-- **[<code>GET</code> /brews/:id](https://github.com/buji405/byob/blob/master/Docs/specificBrew.md)**
+- **[<code>GET</code> /brews/:id](https://github.com/buji405/byob/blob/master/Docs/getallbrewsfromspecificbrewery.md)**
 - **[<code>DELETE</code> /brews/:id](https://github.com/buji405/byob/blob/master/Docs/deletebrew.md)**
-- **[<code>PATCH</code> /brews/:id](https://github.com/buji405/byob/blob/master/Docs/updateBrew.md)**
+- **[<code>PATCH</code> /brews/:id](https://github.com/buji405/byob/blob/master/Docs/updatebrew.md)**
 
 #### Breweries Resources
-- **[<code>GET</code> /breweries](https://github.com/buji405/byob/blob/master/Docs/getBreweries.md)**
-- **[<code>POST</code> /breweries](https://github.com/buji405/byob/blob/master/Docs/postBreweries.md)**
+- **[<code>GET</code> /breweries](https://github.com/buji405/byob/blob/master/Docs/getallbreweries.md)**
+- **[<code>POST</code> /breweries](https://github.com/buji405/byob/blob/master/Docs/postnewbrewery.md)**
 
-- **[<code>DELETE</code> /breweries/:id](https://github.com/buji405/byob/blob/master/Docs/updateBrew.md)**
-- **[<code>PATCH</code> /breweries/:id](https://github.com/buji405/byob/blob/master/Docs/updateBrew.md)**
+- **[<code>DELETE</code> /breweries/:id](https://github.com/buji405/byob/blob/master/Docs/deletebrewery.md)**
+- **[<code>PATCH</code> /breweries/:id](https://github.com/buji405/byob/blob/master/Docs/updatebrewery.md)**
 
 
 ## FAQ
