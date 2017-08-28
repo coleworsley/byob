@@ -32,5 +32,5 @@
     
     OR
    
- * **Code:** 400 <br />
+ * **Code:** 400 Bad Request <br />
    **Content:** `{ error: "Invalid parameter(s) }`
