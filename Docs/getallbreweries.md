@@ -23,15 +23,6 @@
   * **Code:** 404 NOT FOUND <br />
     **Content:** `{ error : "...(description about error)..." }`
 
-  OR
-
-  * **Code:** 403 UNAUTHORIZED <br />
-    **Content:** `{ error : "Invalid token." }`
-    
-  OR
-
-  * **Code:** 403 UNAUTHORIZED <br />
-    **Content:** `{ error : "You must be authorized to use this endpoint." }`
 
 * **Sample Call:**
 
