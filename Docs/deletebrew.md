@@ -20,6 +20,7 @@
 
    **Required:**
     Authorized JWT Token required.
+   
    `{ token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...." }`
 
 * **Data Params**
