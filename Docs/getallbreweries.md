@@ -10,8 +10,18 @@
 
   `GET`
   
+* **Queries**
+* **URL**
+`/api/v1/breweries?state="KS"`
 
-* **Success Response:**
+* **Success Response for Query:**
+
+  * **Code:** 200 <br />
+    **Content:** `[
+    { name: "Red Shirt Brewery.", city : "Kansas City", state: "KS" }
+  ]`
+  
+* **Success Response for all:**
 
   * **Code:** 200 <br />
     **Content:** `[
