@@ -4,7 +4,7 @@
 
 * **URL**
 
-  `/api/v1/brews`
+  `/api/v1/brews/:id`
 
 * **URL Params**
 
