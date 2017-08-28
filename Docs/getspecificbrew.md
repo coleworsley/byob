@@ -19,7 +19,8 @@
 * **Success Response:**
 
   * **Code:** 200 <br />
-    **Content:** `{
+    **Content:** ```
+    {
       "id": 11,
       "original_id": 2099,
       "name": "Sophomoric Saison",
@@ -30,7 +31,7 @@
       "brewery_id": 178,
       "created_at": "2017-08-26T17:48:41.486Z",
       "updated_at": "2017-08-26T17:48:41.486Z"
-    }`
+    }```
  
 * **Error Response:**
 
