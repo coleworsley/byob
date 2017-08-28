@@ -29,3 +29,8 @@
 
   * **Code:** 500 Server error <br />
     **Content:** `{ error : "Internal server error" }`
+    
+    OR
+   
+ * **Code:** 400 <br />
+   **Content:** `{ error: "Invalid parameter(s) }`
