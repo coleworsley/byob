@@ -1,9 +1,9 @@
-**Show User**
+**JWT Auth **
 ----
   Returns a jwt (json web token)
 * **URL**
 
-  /auth
+  `/auth`
 
 * **Method:**
 
@@ -13,7 +13,7 @@
 
    **Required:**
  
-   `id=[integer]`
+   `none`
 
 * **Data Params**
 
@@ -22,27 +22,20 @@
 * **Success Response:**
 
   * **Code:** 200 <br />
-    **Content:** `{ id : 12, name : "Michael Bloom" }`
- 
-* **Error Response:**
-
-  * **Code:** 404 NOT FOUND <br />
-    **Content:** `{ error : "User doesn't exist" }`
-
-  OR
-
-  * **Code:** 401 UNAUTHORIZED <br />
-    **Content:** `{ error : "You are unauthorized to make this request." }`
+    **Content:** `{ token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...." }`
 
 * **Sample Call:**
 
   ```javascript
-    $.ajax({
-      url: "/users/1",
-      dataType: "json",
-      type : "GET",
-      success : function(r) {
-        console.log(r);
-      }
-    });
+  fetch('/auth', {
+    'Content-Type': 'application/json',
+    'method': 'POST',
+    'body': {
+      email: 'example@something.io',
+      app: 'exampleApp',
+    },
+  })
+  .then(res => res.json())
+  .then(token => console.log(token))
+  .catch(error => console.log(error));
   ```
