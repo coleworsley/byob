@@ -19,7 +19,8 @@
 * **Success Response:**
 
   * **Code:** 200 <br />
-    **Content:** ```
+    **Content:** 
+    ``` javascript
     {
       "id": 11,
       "original_id": 2099,
