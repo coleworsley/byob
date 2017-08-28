@@ -16,7 +16,7 @@ $('button').on('click', (e) => {
   })
     .then(res => res.json())
     .then((token) => {
-      $('.token-container').append(`<div class="token">Your token:${token.token}</div>`);
+      $('.token-container').append(`<div class="token">Your token: ${token.token}</div>`);
     })
     .catch(error => console.log(error));
 });
