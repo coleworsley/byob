@@ -1,11 +1,11 @@
 # Craft Brewz
 
-Craft Brewz (BYOB) allows users to go to breweries and add their information as well as adding what beers they tried when they were there. 
-They can update the information as well as delete it.
-
-
 The API is [REST API](http://en.wikipedia.org/wiki/Representational_State_Transfer "RESTful")
 Currently, return format for all endpoints is [JSON](http://json.org/ "JSON").
+
+Craft Brewz (BYOB) allows users to go to breweries and add their information as well as adding what beers they tried when they were there. 
+A user can create, read, update and delete data within the API.
+
 ***
 
 ## Endpoints
