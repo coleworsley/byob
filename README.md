@@ -1,6 +1,6 @@
-# BYOB
+# Craft Brewz
 
-BYOB allows users to go to breweries and add their information as well as adding what beers they tried when they were there. 
+Craft Brewz (BYOB) allows users to go to breweries and add their information as well as adding what beers they tried when they were there. 
 They can update the information as well as delete it.
 
 
